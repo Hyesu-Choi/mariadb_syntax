@@ -69,7 +69,7 @@ alter table post drop column age;
 alter table 테이블명 change column 변경할컬럼명 변경컬럼명 변경컬럼타입 [추가조건];
 alter table post change column contents content varchar(255);
 
--- 테이블 컬럼의 타입과 제약조건 변경
+-- 테이블 컬럼의 타입과 제약조건 변경(덮어쓰기 모드라서 바뀌는 타입 뿐만아니라 전체 타입,추가조건 다 적어야함 )
 alter table 테이블명 modify column 컬럼명 타입;
 alter table post modify column content varchar(3000);
 alter table author modify column email varchar(255) not null unique;
@@ -86,5 +86,5 @@ alter table post change column content contents varchar(3000);
 drop table 테이블명;
 drop table abc;
 
--- 일련의 쿼리를 실행시킬때 특정 쿼리에서 에러가 나지않도록 if exists를 많이 사용
+-- 테이블 삭제. 일련의 쿼리를 실행시킬때 특정 쿼리에서 에러가 나지않도록 if exists를 많이 사용
 drop table if exists abc;
