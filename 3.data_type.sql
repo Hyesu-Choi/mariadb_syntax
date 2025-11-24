@@ -11,14 +11,14 @@ alter table post modify column author_id bigint;
 alter table author modify column id bigint;
 alter table post modify column id bigint;
 
--- decimal(총자리수, 소수부자리수)
+-- decimal(총자리수, 소수부자리수) - 고정소숫점
 alter table author add column height decimal(4,1);
 -- 정상적으로 insert
 insert into author(id, name, email, height) values(7, '룽지2', 'lz2@test.com', 179.3);
 -- 데이터가 잘리도록 insert
 insert into author(id, name, email, height) values(8, '룽지3', 'lz3@test.com', 179.3456);
 
--- 문자타입 : 고정길이(char), 가변길이(varchar, text)
+-- 문자타입 : 고정길이(char), 가변길이(varchar:메모리기반저장, text:스토리지기반저장)
 alter table author add column id_number char(16);
 alter table author add column self_introduction text;
 
@@ -42,7 +42,7 @@ insert into author(id, name, email) values (12, '최룽지3', 'asgssg3@naver.com
 alter table author add column birthday date;
 alter table post add column created_time datetime;
 insert into post(id, title, contents, author_id, created_time) values(4, 'hello', 'sgsefsefsef', 1, "2019-1-1 14:00:04");
--- datetime과 default 현재시간 입력은 많이 사용되는 패턴
+-- datetime과 default 현재시간 입력은 많이 사용되는 패턴(중요)
 alter table post modify column created_time datetime default current_timestamp();
 insert into post(id, title, contents, author_id) values(5, 'hello', '룽지룽지', 1);
 
@@ -62,19 +62,19 @@ selecet * from author where name regexp '[가-힣]';  -- 이름에 한글이 포
 
 -- cast : 타입변환 (잘 안씀)
 -- 문자 -> 숫자
-selecet cast('12' as unsigned);  -- 12 // int대신 unsigned 적음
+selecet cast('12' as unsigned);  -- 12 // int대신 unsigned 많이 씀
 -- 숫자 -> 날짜
 select cast(20251121 as date); -- 2025-11-21
 -- 문자 -> 날짜
 select cast('20251121' as date); -- 2025-11-21
 
--- data_format : 날짜타입변환(Y, m, d, H, i, s)
+-- data_format : 날짜타입변환(Y, m, d, H, i(분), s)
 select date_format(created_time, '%Y-%m-%d') from post;  -- 2025-11-12 00:00:00 -> 2025-11-12
 select date_format(created_time, '%H-%i-%s') from post;  -- 2025-11-12 00:00:00 -> 2025-11-12
 select * from post where date_format(created_time, '%Y')='2025';  -- 2025년에 등록된 게시글 조회
 select * from post where date_format(created_time, '%m')='11';  -- 11월에 등록된 게시글 조회
 select * from post where date_format(created_time, '%m')='01';  -- 1월 등록된 게시글 조회. 실무에서는 이런식으로 안하고 밑에처럼 함
-select * from post where cast(date_format(created_time, '%m') as unsigned)=1;   -- 1월 등록된 게시글 조회
+select * from post where cast(date_format(created_time, '%m') as unsigned)=1;   -- 1월 등록된 게시글 조회. 사용자 입력값에 따라 조회해야할 수 있어서 이런식으로 많이 씀
 
 -- 실습 : 2025년 11월에 등록된 게시글 조회
 select * from post where date_format(created_time, '%Y-%m')='2025-11';
