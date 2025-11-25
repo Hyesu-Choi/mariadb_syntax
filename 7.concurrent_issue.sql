@@ -1,15 +1,16 @@
+-- DB 동시성 문제를 해결하기 위한 격리수준 : read uncommitted, read committed, repeatable read, serializable
 -- read uncommitted: 커밋되지 않은 데이터 read 가능 -> dirty read 문제 발생
 -- 실습 절차
 -- 1) 워크벤츠에서 auto_commit 해제. update실행. commit 하지 않음.(transaction1)
-
+update author set post_count=count+1 where id=2;
 -- 2) 터미널을 열어서 selected했을 때 위 update 변경사항이 읽히는지 확인(transaction2)
-
+select post_count from author where id=2;  -- 안읽힘
 -- 결론 : mariaDb는 기본이 repeatable read 이므로 dirty read 발생X.
 
 -- read committed : 커밋한 데이터만 read 가능 -> phantom read 발생(또는 non-repeatable read)
 -- 실습 절차
 -- 1) 워크벤치에서 아래 코드 실행
-start transaction;
+start transaction;  -- 트랜잭션 시작 선언문
 select count(*) from author;  --13개
 do sleep(15);  -- 15초 쉬는 도중에 재빨리 터미널에서 insert
 select count(*) from author;  -- 13개
@@ -53,6 +54,6 @@ DELIMITER ;
 
 call concurrent_test2();  
 -- 터미널에서는 아래 코드 실행
-select post_count from author where id=2 for update;  -- 바로 조회안됨. 앞의 concurrent_test2 프로시저의 절차가 끝나야 조회가 됨.
+select post_count from author where id=2 for update;  -- 바로 조회안됨. 앞의 concurrent_test2 프로시저(15초)의 절차가 끝나야 조회가 됨.
 
--- serializable
+-- serializable : 모든 트랜잭션 순차적 실행 -> 동시성문제없음(성능저하)

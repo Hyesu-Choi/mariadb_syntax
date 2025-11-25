@@ -20,7 +20,7 @@ alter table post add constraint post_pk primary key(id);
 alter table post add constraint post_fk foreign key(author_id) references author(id);
 
 -- on delete/on update 제약조건 변경 테스트
-alter table post add constraint post_fk foreign key(author_id) references author(id) on delete set null on update cascade;
+alter table post add constraint post_fk foreign key(author_id) references author(id) on delete set null on update cascade;  -- delete: null값 세팅, update: 덮어쓰기
 
 -- default 옵션
 -- 어떤 컬럼이든 dafault 지정이 가능하지만, 일반적으로 enum타입 및 현재시간에서 많이 사용
