@@ -1,5 +1,5 @@
 -- case1 : author inner join post
--- 글쓴적이 있는 글쓴이와 그 글쓴이가 쓴 글의 목록 출력
+-- 글쓴적이 있는 글쓴이와 그 글쓴이가 쓴 글의 목록 출력. -- 글 안쓴 글쓴이는 조회 안됨
 select * from author inner join post on author.id=post.author_id;
 select * from author a inner join post p on a.id=p.author_id;  -- 테이블명 alias 로 선언한 경우 
 select a.*, p.* from author a inner join post p on a.id=p.author_id; 
@@ -9,14 +9,16 @@ select a.*, p.* from author a inner join post p on a.id=p.author_id;
 select * from post p inner join author a on p.author_id=a.id;
 -- 글쓴이가 있는 글 전체 정보와 글쓴이의 이메일만 출럭
 select p.*, a.email from post p inner join author a on p.author_id=a.id;
+-- case1과 case2는 컬럼 순서만 달라질뿐 결과값은 똑같다
 
 -- case3 : author left join post
--- 글쓴이는 모두 조회하되, 만약 쓴 글이 있다면 글도 함께 조회하겠다
+-- 글쓴이는 모두 조회하되, 만약 쓴 글이 있다면 글도 함께 조회하겠다  -- 글을 안쓴 글쓴이도 조회
 select * from author a left join post p on a.id=post.author_id; 
 
 -- case4 : post left join author
 -- 글을 모두 조회하되, 글쓴이가 있다면 글쓴이도 함께 조회
-select * from post p left join author a on a.id=post.author_id; 
+select * from post p left join author a on a.id=post.author_id;
+-- case3은 글쓴이를 모두 조회하고 쓴글이 있으면 함께 조회한다. case4는 글을 모두 조회하고 글쓴이가 있으면 함께 조회한다. 
 
 -- select from join on where 조건 group by having order by 셀프조인왜글해요
 
@@ -121,3 +123,14 @@ WHERE board.STATUS="DONE"
 GROUP BY user.USER_ID 
 HAVING TOTAL_SALES >=700000
 ORDER BY TOTAL_SALES ASC;
+
+-- 다중열 group by 
+-- group by 첫번째컬럼, 두번째컬럼 : 첫번째컬럼으로 grouping 이후에 두번째컬럼으로 grouping
+-- post테이블에서 작성자별로 구분하여, 같은 제목의 글의 개수를 출력하시오.
+select author_id, title, count(*) from post group by author_id, title;  -- group by 두번하면 두 개이 컬럼명 둘 다 출력하는게 좋음
+-- 재구매가 일어난 상품과 회원 리스트 구하기
+SELECT USER_ID, PRODUCT_ID
+FROM ONLINE_SALE
+GROUP BY USER_ID, PRODUCT_ID
+HAVING count(*)>=2
+ORDER BY USER_ID ASC, PRODUCT_ID DESC
