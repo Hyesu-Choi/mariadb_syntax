@@ -12,7 +12,7 @@ select * from author_view;
 -- view에 대한 권한 부여
 grant select on board.author_view to 'marketing'@'%';
 
--- view 삭제
+-- view 삭제 .. ui로 작업하는게 편함
 drop view author_view;
 
 -- 프로시저 생성
@@ -28,7 +28,7 @@ call 프로시저명();
 call hello_procedure();  -- 스키마 선택되어있으면
 call board.hello_procedure();  -- 스키마 선택 안되있으면
 
--- 프로시저 삭제
+-- 프로시저 삭제 .. ui로 작업하는게 편함
 drop procedure 프로시저명();
 drop procedure hello_procedure();
 
@@ -111,6 +111,3 @@ begin
     end while;
 end
 // delimiter ;
-
-10
-abc@naver.com

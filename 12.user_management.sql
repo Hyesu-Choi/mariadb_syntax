@@ -1,7 +1,7 @@
 -- 사용자 목록 조회
 select * from mysql.user;
 
--- 사용자 생성 // %: 원격에서 접속 가능한 계정 만들기. localhost : 로컬에서만 접속 가능 계정 만들기.
+-- 사용자 생성 ..  %: 원격에서 접속 가능한 계정 만들기. localhost : 로컬에서만 접속 가능 계정 만들기.
 create user 'marketing'@'%' identified by 'test4321';
 
 -- 사용자에게 권한부여
