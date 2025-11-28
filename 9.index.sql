@@ -1,7 +1,7 @@
 -- pk, fk, unique 제약조건 추가시에 해당컬럼에 대해 index페이지 자동생성
 -- 별도의 컬럼에 대해 index 추가 생성 가능
 
--- index 조회
+-- index 조회..어느컬럼에 index설정되어있는지 확인하는 용도
 show index from 테이블명;
 show index from author;
 
@@ -46,5 +46,5 @@ END //
 DELIMITER ;
 -- 이메일에 unique 제약조건 추가해서, 인덱스 추가했을 때 안했을때 비교해서 데이터 검색해보기
 select * from author order by id desc limit 1;
-select * from author where email='bradkim1000000@naver.com';  -- 이 부분이 얼마나 걸리는지 비교 가능
+select * from author where email='bradkim1000000@naver.com';  -- 이 부분이 얼마나 걸리는지 비교 가능 -- 0.23 -> 0.01 조회 속도 빠름
 

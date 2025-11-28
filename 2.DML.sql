@@ -55,3 +55,5 @@ select * from author where password is not null;
 SELECT ANIMAL_ID, NAME, DATETIME from ANIMAL_INS ORDER BY NAME ASC, DATETIME DESC;
 -- 상위 n개 레코드
 SELECT NAME FROM ANIMAL_INS ORDER BY DATETIME ASC LIMIT 1;
+
+
