@@ -16,11 +16,14 @@ keys *
 
 # String 자료구조
 # set key:value 형식으로 값 세팅  .. id값만 넣으면 헷갈리니까 user:email:id 형식으로 넣음
+set keyname value
 set user:eamil:1 hong@naver.com
 set user:eamil:2 hong2@naver.com
 # get key 를 통해 value값 구함
+get keyname
 get user:eamil:1
 # 이미 존재하는 key를 set하면 덮어쓰기
+set key 새value값
 set user:eamil:1 hong2@naver.com
 # key값이 이미 존재하면 pass시키고 없을떄만 set하기 위해서는 nx옵션 사용
 set user:eamil:1 hong3@naver.com nx
@@ -28,7 +31,7 @@ set user:eamil:1 hong3@naver.com nx
 set user:eamil:2 hong2@naver.com ex 30
 # 특정 key값 삭제
 del 키값
-# 현재 DB내 모든 key값 삭제.. 운영db는 사용금지지
+# 현재 DB내 모든 key값 삭제.. 운영db는 사용금지
 flushdb 
 
 # redis String 자료구조 실전활용
@@ -59,7 +62,7 @@ lrange students -1 -1  # 마지막 값만 조회
 # list값 꺼내기(꺼내면서 삭제)
 rpop students
 lpop students
-# A리스트에서 rpop하여 B리스트에 lpush : 잘 안쓰임. deprecated됨(공식적으로 더이상 사용하지 않음).
+# A리스트에서 rpop하여 B리스트에 lpush : 잘 안쓰임. deprecated되었음(공식적으로 더이상 사용하지 않음).
 rpoplpush A리스트 B리스트
 rpoplpush students students 
 #list의 데이터 개수 조회
